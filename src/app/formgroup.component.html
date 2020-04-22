@@ -1,0 +1,48 @@
+<h3>Students Registration Form - Enroll for Course</h3>
+<div *ngIf="userForm.invalid && !formSubmitted" [ngClass]="'error'"></div>
+<div *ngIf="formSubmitted" [ngClass]="'success'"></div>
+<br />
+<div>
+ <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+   <div>
+     Name: <input formControlName="name" placeholder="Enter Name" />
+     <label *ngIf="userName.invalid" [ngClass]="'error'"> </label>
+   </div>
+   <div>
+     Roll No.:
+     <input formControlName="rollno" placeholder="Enter Roll no." />
+     <label *ngIf="userForm.get('rollno').invalid" [ngClass]="'error'">
+     </label>
+   </div>
+   <div>
+     Select Course:
+     <select formControlName="profile">
+       <option *ngFor="let courses of profiles" [ngValue]="courses.shortName">
+         {{ courses.name }}
+       </option>
+     </select>
+   </div>
+   <br />
+   <div formArrayName="users">
+     <div *ngFor="let user of users.controls; index as idx">
+       <input [formControlName]="idx" placeholder="Enter User Name" />
+       <button type="button" (click)="deleteUserField(idx)">Delete</button>
+     </div>
+   </div>
+   <button type="button" (click)="addUserField()">Add More Students</button>
+   <br /><br />
+   <div>
+     <button type="submit">Submit</button>
+     <button type="button" (click)="setDefaultValue()">Set Default Values</button>
+     <button type="button" (click)="resetForm()">Reset to Blank Form</button>
+   </div>
+ </form>
+ <div>
+   <p *ngIf="usrNameChanges">
+     Name: <b>{{ usrNameChanges }}</b>
+   </p>
+   <p *ngIf="usrNameStatus">
+     Name Status: <b>{{ usrNameStatus }}</b>
+   </p>
+ </div>
+</div>
